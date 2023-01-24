@@ -5,7 +5,7 @@ import { useNote } from "./NoteLayout";
 import ReactMarkdown from "react-markdown"
 import { NoteProps } from "../hooks/types";
 
-const Note = ({onDelete}: NoteProps) => {
+const Note = ({ onDelete }: NoteProps) => {
   const note = useNote();
   const navigate = useNavigate();
   return (
@@ -14,11 +14,7 @@ const Note = ({onDelete}: NoteProps) => {
         <Col>
           <h1>{note.title}</h1>
           {note.tags.length > 0 && (
-            <Stack
-              gap={1}
-              direction="horizontal"
-              className="flex-wrap"
-            >
+            <Stack gap={1} direction="horizontal" className="flex-wrap">
               {note.tags.map((tag) => (
                 <Badge className=" text-truncate" key={tag.id}>
                   {tag.label}
@@ -32,14 +28,24 @@ const Note = ({onDelete}: NoteProps) => {
             <Link to={`/${note.id}/edit`}>
               <Button variant="primary">Edit</Button>
             </Link>
-            <Button onClick={()=> {onDelete(note.id); navigate("/")}} variant="outline-danger ">Delete</Button>
+            <Button
+              onClick={() => {
+                onDelete(note.id);
+                navigate("/");
+              }}
+              variant="outline-danger "
+            >
+              Delete
+            </Button>
             <Link to="/">
-            <Button variant="outline-secondary ">Back</Button>
+              <Button variant="outline-secondary ">Back</Button>
             </Link>
           </Stack>
         </Col>
       </Row>
-      <ReactMarkdown>{note.markdown}</ReactMarkdown>
+      <div className="noteMarkdown overflow-auto">
+        <ReactMarkdown className="py-3 px-4">{note.markdown}</ReactMarkdown>
+      </div>
     </>
   );
 };
