@@ -10,6 +10,7 @@ import NoteList from "./components/NoteList";
 import NoteLayout from "./components/NoteLayout";
 import Note from "./components/Note";
 import EditNote from "./components/EditNote";
+import "./styles/style.css";
 
 function App() {
   const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", []);
@@ -73,46 +74,48 @@ function App() {
   }
 
   return (
-    <Container className="my-4 ">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <NoteList
-              notes={notesWithTags}
-              availableTags={tags}
-              onUpdateTag={updateTag}
-              onDeleteTag={deleteTag}
-            />
-          }
-        />
-        <Route
-          path="/new"
-          element={
-            <NewNote
-              onSubmit={onCreateNote}
-              onAddTag={addTag}
-              availableTags={tags}
-            />
-          }
-        />
-        <Route path="/:id" element={<NoteLayout notes={notesWithTags} />}>
-          <Route index element={<Note onDelete={onDeleteNote} />} />
+    <div className="bgImage101">
+      <Container className="py-4 ">
+        <Routes>
           <Route
-            path="edit"
+            path="/"
             element={
-              <EditNote
-                onSubmit={onUpdateNote}
+              <NoteList
+                notes={notesWithTags}
+                availableTags={tags}
+                onUpdateTag={updateTag}
+                onDeleteTag={deleteTag}
+              />
+            }
+          />
+          <Route
+            path="/new"
+            element={
+              <NewNote
+                onSubmit={onCreateNote}
                 onAddTag={addTag}
                 availableTags={tags}
               />
             }
           />
-        </Route>
-        <Route path="*" element={<Navigate to="/" />} />{" "}
-        {/*this will send you to the home page  */}
-      </Routes>
-    </Container>
+          <Route path="/:id" element={<NoteLayout notes={notesWithTags} />}>
+            <Route index element={<Note onDelete={onDeleteNote} />} />
+            <Route
+              path="edit"
+              element={
+                <EditNote
+                  onSubmit={onUpdateNote}
+                  onAddTag={addTag}
+                  availableTags={tags}
+                />
+              }
+            />
+          </Route>
+          <Route path="*" element={<Navigate to="/" />} />{" "}
+          {/*this will send you to the home page  */}
+        </Routes>
+      </Container>
+    </div>
   );
 }
 
